@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Myzina Gâteaux | L'Excellence de la Pâte Artisanale</title>
+    <meta name="description" content="Découvrez Myzina Gâteaux, l'excellence artisanale des fonds de tartes. Sablés traditionnels, zestes de citron, piment et plus.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:wght@400;700&family=Montserrat:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-dark: #121212;
+            --brand-gold: #D4AF37;
+            --brand-gold-bright: #E5C366;
+            --brand-beige: #F9F7F2;
+            --brand-accent: #8E1B1B;
+            --primary: #630000;
+            --cream: #FCFBF7;
+            --paper: #F4F1EA;
+            --text-dark: #121212;
+        }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--brand-beige); 
+            color: var(--brand-dark); 
+            -webkit-tap-highlight-color: transparent;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body.font-arabic, .rtl {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.05rem; /* Slight bump for readability */
+            line-height: 1.8;
+        }
+
+        .font-serif { font-family: 'Playfair Display', 'Cormorant Garamond', serif; }
+        
+        h1, h2, h3, h4 { 
+            line-height: 1.1; letter-spacing: -0.02em; 
+            font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+        }
+        p { line-height: 1.6; }
+
+        .rtl .font-serif, .rtl h1, .rtl h2, .rtl h3, .rtl h4,
+        body.font-arabic h1, body.font-arabic h2, body.font-arabic h3, body.font-arabic .font-serif { 
+            font-family: 'Cairo', sans-serif !important; 
+            font-weight: 900; 
+            line-height: 1.4;
+        }
+
+        body.font-arabic .heritage-text,
+        body.font-arabic .var-desc-text,
+        body.font-arabic .quality-desc,
+        body.font-arabic .contact-subtitle,
+        body.font-arabic .footer-tagline {
+            font-size: 1.15rem;
+            font-weight: 400;
+        }
+
+        body.font-arabic .uppercase {
+            text-transform: none;
+            letter-spacing: normal;
+        }
+        
+        .scrolled {
+            background: rgba(249, 247, 242, 0.98);
+            backdrop-filter: blur(20px);
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.5rem !important;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+        }
+
+        nav.scrolled {
+            background: rgba(252, 251, 247, 0.98);
+            backdrop-filter: blur(15px);
+            padding: 1rem 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .hero-gradient { 
+            background: linear-gradient(to bottom, 
+                rgba(0,0,0,0.7) 0%, 
+                rgba(0,0,0,0.2) 40%, 
+                rgba(0,0,0,0.4) 70%, 
+                rgba(0,0,0,0.9) 100%); 
+        }
+
+        .variation-img {
+            position: absolute; inset: 0; opacity: 0;
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: scale(1.1);
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+        .variation-img.active { opacity: 1; transform: scale(1); z-index: 10; }
+
+        #variation-images .variation-img {
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 3s ease-out;
+        }
+
+        .product-nav {
+            display: flex;
+            gap: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            overflow-x: auto;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 2px;
+        }
+        .product-nav::-webkit-scrollbar { display: none; }
+        
+        .nav-tab {
+            padding: 2rem 1.5rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.4s ease;
+            position: relative;
+            opacity: 0.4;
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+        }
+        .nav-tab.active {
+            opacity: 1;
+            color: var(--brand-gold-bright);
+            transform: translateY(-2px);
+        }
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--brand-gold-bright);
+            box-shadow: 0 0 15px rgba(229, 195, 102, 0.6);
+        }
+
+        @keyframes gold-shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .btn-gold-shimmer {
+            background: linear-gradient(90deg, #121212, #2a2a2a, #121212);
+            background-size: 200% 100%;
+        }
+        
+        .card-glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Texture Papier Artisanal */
+        .texture-paper {
+            background-image: url("https://www.transparenttextures.com/patterns/handmade-paper.png");
+        }
+
+        /* RTL Adjustments */
+        [dir="rtl"] .composition-header {
+            border-left: none;
+            border-right: 2px solid var(--primary);
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+
+        [dir="rtl"] .nav-links {
+            flex-direction: row-reverse;
+            gap: 2.5rem;
+        }
+        
+        [dir="rtl"] .stats-grid > div {
+            border-right: none;
+        }
+
+        /* Product Card Zoom Effect */
+        .product-card {
+            transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Selectors Buttons */
+        .var-selector-btn {
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.02);
+            padding: 1.2rem 0.5rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+            border-radius: 2px;
+        }
+
+        .var-selector-btn.active {
+            border-color: var(--primary);
+            background: rgba(99, 0, 0, 0.15);
+        }
+
+        .var-selector-btn:hover:not(.active) {
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-2px);
+        }
+
+        /* Form Styles */
+        input, select, textarea {
+            border-radius: 0;
+            -webkit-appearance: none;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right center;
+        }
+
+        [dir="rtl"] select {
+            background-position: left center;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--cream);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Accent for RTL Border */
+        .border-accent {
+            transition: all 0.5s ease;
+        }
+        [dir="rtl"] .border-accent {
+            transform: translate(-16px, 16px);
+        }
+
+        @media (max-width: 1024px) {
+            .hero-content { padding-top: 4rem; }
+        }
+
+        @media (max-width: 768px) { 
+            .mobile-menu-active { overflow: hidden; height: 100vh; position: fixed; width: 100%; }
+            h1 { font-size: 3rem !important; }
+            h2 { font-size: 2.25rem !important; }
+            .rtl h1 { font-size: 2rem !important; }
+            .rtl h2 { font-size: 1.75rem !important; }
+            section { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+            .product-nav { gap: 0.75rem; }
+            .nav-tab { padding: 1.5rem 0.75rem; font-size: 11px; letter-spacing: 0.2em; }
+        }
+
+        @keyframes scroll-hint {
+            0% { transform: translateY(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(200%); opacity: 0; }
+        }
+        
+        @media (min-width: 1536px) {
+            .max-w-large { max-width: 1600px; }
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden" id="body-main">
+    <nav class="fixed w-full z-50 transition-all duration-700 px-4 md:px-8 lg:px-12 py-6 md:py-10" id="main-nav">
+        <div class="max-w-[1800px] mx-auto flex justify-between items-center">
+            <a href="#" class="block focus:outline-none">
+                <img src="https://r2-bucket.flowith.net/f/37fca580388d3d45/logo_myzina%25402000x732.png" alt="Myzina" class="h-6 md:h-10 lg:h-14 transition-all duration-500" id="nav-logo">
+            </a>
+            
+            <div class="flex items-center space-x-3 md:space-x-8 rtl:space-x-reverse">
+                <button id="lang-toggle" class="text-[9px] md:text-[11px] tracking-widest font-black border border-black/10 px-4 md:px-6 py-2 md:py-3 rounded-full bg-white/40 backdrop-blur-md hover:bg-white transition-all uppercase flex items-center gap-2">
+                    <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                    <span id="lang-label">FR / AR</span>
+                </button>
+                <a href="#contact" class="hidden md:flex bg-black text-white text-[10px] uppercase tracking-[0.3em] px-10 py-5 hover:bg-[#D4AF37] transition-all duration-500 font-bold items-center gap-3 group" data-t="nav_order">
+                    <span>Commander</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                </a>
+                <button class="lg:hidden p-2 text-black bg-white/40 backdrop-blur-md rounded-full border border-black/5" id="mobile-menu-btn" aria-label="Menu">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 z-[100] bg-[#F9F7F2] hidden flex-col p-8 overflow-y-auto">
+        <div class="flex justify-between items-center mb-16">
+            <img src="https://r2-bucket.flowith.net/f/37fca580388d3d45/logo_myzina%25402000x732.png" class="h-8" alt="">
+            <button id="close-menu" class="p-3 bg-black/5 rounded-full"><i data-lucide="x" class="w-8 h-8"></i></button>
+        </div>
+        <div class="flex flex-col space-y-8 text-4xl font-serif italic mb-12">
+            <a href="#heritage" data-t="nav_heritage" class="mobile-nav-item border-b border-black/5 pb-4">L'Héritage</a>
+            <a href="#catalogue" data-t="nav_catalogue" class="mobile-nav-item border-b border-black/5 pb-4">Catalogue</a>
+            <a href="#process" data-t="nav_process" class="mobile-nav-item border-b border-black/5 pb-4">Savoir-faire</a>
+            <a href="#contact" data-t="nav_order" class="mobile-nav-item text-[#D4AF37] border-b border-black/5 pb-4">Commander</a>
+        </div>
+        <div class="mt-auto space-y-6 pt-10 border-t border-black/10">
+            <div>
+                <p class="text-[10px] uppercase tracking-widest opacity-40 font-black mb-2">Contact</p>
+                <p class="text-2xl font-serif">+213 (0) 551 27 50 25</p>
+                <p class="text-lg opacity-60">myzina.gateaux@gmail.com</p>
+            </div>
+            <div class="flex gap-4">
+                <div class="w-10 h-10 bg-black/5 rounded-full flex items-center justify-center"><i data-lucide="instagram" class="w-5 h-5"></i></div>
+                <div class="w-10 h-10 bg-black/5 rounded-full flex items-center justify-center"><i data-lucide="facebook" class="w-5 h-5"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <header class="relative h-[100svh] min-h-[600px] flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
+        <div class="absolute inset-0 z-0">
+            <img src="https://r2-bucket.flowith.net/f/087e4235bf2b20c7/photo_2026-02-25_06-23-10%2540864x1184.jpg" alt="Artisanat" class="w-full h-full object-cover opacity-60 scale-100" id="hero-img">
+            <div class="absolute inset-0 hero-gradient"></div>
+        </div>
+        
+        <div class="relative z-10 text-center text-white px-6 max-w-5xl hero-content">
+            <div id="hero-reveal">
+                <span class="block text-[10px] md:text-[14px] tracking-[0.4em] md:tracking-[0.8em] uppercase mb-8 md:mb-14 font-bold text-[#E5C366]" data-t="hero_subtitle">Maison de Haute Pâtisserie</span>
+                <h1 class="font-serif text-5xl md:text-[100px] lg:text-[130px] mb-10 md:mb-20 leading-[1] md:leading-[1.1]" data-t="hero_title">
+                    L'Art de la Pâte <br><span class="italic font-normal opacity-90">Sublimée</span>
+                </h1>
+                <p class="text-base md:text-2xl mb-12 md:mb-24 font-light max-w-2xl mx-auto opacity-80 leading-relaxed px-4" data-t="hero_desc">
+                    Des bases d'exception façonnées à la main pour les créations les plus raffinées.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-5 px-4">
+                    <a href="#catalogue" class="w-full sm:w-auto group relative px-12 py-5 bg-white text-black text-[12px] font-black uppercase tracking-widest transition-all text-center hover:bg-[#D4AF37] hover:text-white">
+                        <span class="relative z-10 flex items-center justify-center gap-3">
+                            <span data-t="hero_cta">Explorer</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </span>
+                    </a>
+                    <a href="#contact" class="w-full sm:w-auto px-12 py-5 border border-white/20 text-white text-[12px] font-black uppercase tracking-widest text-center hover:bg-white/10 transition-colors">
+                        <span data-t="nav_order">Commander</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 text-white/30 text-[9px] tracking-widest uppercase font-bold">
+            <div class="w-[1px] h-14 bg-white/10 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1/2 bg-[#D4AF37] animate-[scroll-hint_3s_infinite]"></div>
+            </div>
+        </div>
+    </header>
+
+    <section id="heritage" class="py-24 md:py-48 px-6">
+        <div class="max-w-[1500px] mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center">
+                <div class="order-2 lg:order-1">
+                    <div class="aspect-[4/5] overflow-hidden relative shadow-2xl rounded-2xl group">
+                        <img src="https://r2-bucket.flowith.net/f/fb310e0940dbf66d/Firefly_GeminiFlash_la_patte_de_fond_de_tarte_au_citron_parfum_de_la_patte_sans_fourrage_558707%2540864x1184.png" alt="Process" class="w-full h-full object-cover reveal-img transition-transform duration-[2s] group-hover:scale-110">
+                        <div class="absolute inset-0 border-[20px] border-white/10 pointer-events-none"></div>
+                    </div>
+                </div>
+                
+                <div class="order-1 lg:order-2">
+                    <span class="text-[#D4AF37] font-black tracking-[0.3em] uppercase text-[11px] block mb-8" data-t="heritage_tag">Savoir-faire Ancestral</span>
+                    <h2 class="font-serif text-4xl md:text-8xl mb-10 md:mb-16 leading-tight" data-t="heritage_title">
+                        Un secret gardé entre le <span class="italic text-[#D4AF37]">grain et l'eau</span>.
+                    </h2>
+                    <div class="space-y-8 text-lg md:text-2xl text-black/70 leading-relaxed font-light">
+                        <p data-t="heritage_p1">La Maison Myzina cultive l'excellence dans chaque geste. Nos fonds de tartes sont le fruit d'une alchimie parfaite entre technicité et passion.</p>
+                        <p data-t="heritage_p2">Nous sélectionnons les meilleures matières premières pour garantir une texture et un goût incomparables.</p>
+                    </div>
+                    <div class="mt-12 flex gap-12 border-t border-black/5 pt-12">
+                        <div>
+                            
+                        </div>
+                        <div>
+                                                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalogue" class="py-24 md:py-48 bg-[#0d0d0d] text-white relative overflow-hidden px-6">
+        <div class="max-w-[1600px] mx-auto relative z-10">
+            <div class="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
+                <div>
+                    <span class="text-[#E5C366] text-[11px] uppercase tracking-[0.4em] font-black block mb-4" data-t="cat_tag">La Collection Signature</span>
+                    <h2 class="font-serif text-6xl md:text-[10rem] leading-[0.9]" data-t="cat_title">Variantes</h2>
+                </div>
+                <div class="max-w-md text-white/40 text-sm md:text-lg font-light">
+                    
+                </div>
+            </div>
+
+            <div class="mb-20 -mx-6 md:mx-0">
+                <div class="product-nav px-6 md:px-0" id="variation-tabs"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
+                <div class="lg:col-span-5">
+                    <div class="aspect-square md:aspect-[4/5] overflow-hidden bg-neutral-900 shadow-3xl relative rounded-2xl border border-white/5" id="variation-images"></div>
+                </div>
+
+                <div class="lg:col-span-7 flex flex-col justify-center">
+                    <div id="variation-content" class="space-y-12">
+                        <div class="flex items-center gap-6">
+                            <span id="var-index" class="text-[13px] font-black tracking-widest text-[#E5C366]">01</span>
+                            <div class="h-[1px] w-16 bg-[#E5C366]/30"></div>
+                        </div>
+                        
+                        <h3 id="var-title" class="font-serif text-5xl md:text-8xl leading-tight"></h3>
+                        
+                        <div id="var-options-container" class="flex flex-wrap gap-3"></div>
+
+                        <div class="grid grid-cols-2 gap-12 border-y border-white/10 py-10">
+                            <div>
+                                <span class="block text-3xl md:text-5xl font-serif text-[#E5C366] mb-2" id="var-price"></span>
+                                <span class="text-[10px] uppercase tracking-widest opacity-40 font-black" data-t="unit_price">Tarification</span>
+                            </div>
+                            <div>
+                                <span class="block text-xl md:text-3xl font-light mb-2" id="var-size"></span>
+                                <span class="text-[10px] uppercase tracking-widest opacity-40 font-black" data-t="unit_size">Dimensions</span>
+                            </div>
+                        </div>
+
+                        <p id="var-desc" class="text-lg md:text-2xl text-white/70 font-light leading-relaxed"></p>
+                        
+                        <div class="card-glass p-8 md:p-10 rounded-2xl border-l-4 border-l-[#E5C366]">
+                            <span class="block text-[10px] font-black uppercase tracking-widest text-[#E5C366] mb-4" data-t="chef_note">Conseil du Chef</span>
+                            <p id="var-note" class="italic text-white font-serif text-xl md:text-3xl leading-snug"></p>
+                        </div>
+
+                        <div class="mt-16">
+                            <a href="#contact" class="w-full inline-flex items-center justify-center gap-4 py-6 bg-[#E5C366] text-black text-[13px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-xl hover:shadow-[#E5C366]/20">
+                                <span data-t="quote_btn">Demander un Devis</span>
+                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="py-24 md:py-48 bg-white px-6">
+        <div class="max-w-[1500px] mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20">
+                <div class="text-center space-y-6 group">
+                    <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-[#F9F7F2] mb-4 transition-transform group-hover:scale-110 duration-500">
+                        <i data-lucide="feather" class="w-10 h-10 text-[#D4AF37]"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl md:text-4xl" data-t="q1_title">Légèreté Inédite</h3>
+                    <p class="text-base md:text-lg font-light text-black/50 px-4" data-t="q1_desc">Un équilibre parfait entre croquant et fondant, signature de notre maison.</p>
+                </div>
+                <div class="text-center space-y-6 group">
+                    <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-[#F9F7F2] mb-4 transition-transform group-hover:scale-110 duration-500">
+                        <i data-lucide="award" class="w-10 h-10 text-[#D4AF37]"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl md:text-4xl" data-t="q2_title">Qualité Premium</h3>
+                    <p class="text-base md:text-lg font-light text-black/50 px-4" data-t="q2_desc">Utilisation exclusive de beurres extra-fins et de farines d'exception.</p>
+                </div>
+                <div class="text-center space-y-6 group">
+                    <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-[#F9F7F2] mb-4 transition-transform group-hover:scale-110 duration-500">
+                        <i data-lucide="truck" class="w-10 h-10 text-[#D4AF37]"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl md:text-4xl" data-t="q3_title">Logistique Soignée</h3>
+                    <p class="text-base md:text-lg font-light text-black/50 px-4" data-t="q3_desc">Un conditionnement protecteur garantissant la fraîcheur à l'arrivée.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24 md:py-48 bg-[#121212] text-white px-6">
+        <div class="max-w-[1500px] mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-40">
+                <div class="flex flex-col justify-center">
+                    <span class="text-[#E5C366] text-[11px] uppercase tracking-[0.3em] mb-8 block font-black" data-t="contact_tag">Le Service Conciergerie</span>
+                    <h2 class="font-serif text-5xl md:text-8xl mb-12 leading-tight" data-t="contact_title">Parlons de <br><span class="italic text-[#E5C366]">votre projet</span></h2>
+                    
+                    <div class="space-y-12 mt-12">
+                        <div class="flex items-center gap-8 group">
+                            <div class="w-16 h-16 flex-shrink-0 flex items-center justify-center border border-white/10 rounded-full transition-colors group-hover:border-[#E5C366]/50">
+                                <i data-lucide="mail" class="w-6 h-6 text-[#E5C366]"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] uppercase tracking-widest text-white/30 font-black mb-1">Email</p>
+                                <p class="text-xl md:text-3xl font-serif italic">myzina.gateaux@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-8 group">
+                            <div class="w-16 h-16 flex-shrink-0 flex items-center justify-center border border-white/10 rounded-full transition-colors group-hover:border-[#E5C366]/50">
+                                <i data-lucide="phone" class="w-6 h-6 text-[#E5C366]"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] uppercase tracking-widest text-white/30 font-black mb-1">Téléphone</p>
+                                <p class="text-xl md:text-3xl font-serif italic">+213 (0) 551 27 50 25</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white/[0.02] border border-white/10 p-8 md:p-16 rounded-3xl backdrop-blur-sm shadow-2xl">
+                    <form id="order-form" action="https://formsubmit.co/ajax/myzina.gateaux@gmail.com" method="POST" class="space-y-10">
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest font-black text-white/40 block" data-t="f_name">Nom & Prénom</label>
+                            <input type="text" name="name" required class="w-full bg-transparent border-b border-white/10 py-4 outline-none focus:border-[#E5C366] transition-all text-white text-xl">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest font-black text-white/40 block" data-t="f_email">Email</label>
+                            <input type="email" name="email" required class="w-full bg-transparent border-b border-white/10 py-4 outline-none focus:border-[#E5C366] transition-all text-white text-xl">
+                        </div>
+                        <div class="space-y-2 relative">
+                            <label class="text-[10px] uppercase tracking-widest font-black text-white/40 block" data-t="f_subject">Variante d'intérêt</label>
+                            <select id="contact-select" name="variation" class="w-full bg-transparent border-b border-white/10 py-4 outline-none focus:border-[#E5C366] transition-all text-white/90 text-xl appearance-none cursor-pointer"></select>
+                            <i data-lucide="chevron-down" class="absolute right-0 bottom-4 w-5 h-5 text-white/20 pointer-events-none"></i>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest font-black text-white/40 block" data-t="f_message">Votre Message</label>
+                            <textarea name="message" required class="w-full bg-transparent border-b border-white/10 py-4 outline-none focus:border-[#E5C366] transition-all text-white text-xl h-32 resize-none"></textarea>
+                        </div>
+                        <button type="submit" id="form-submit-btn" class="w-full py-6 bg-white text-black text-[12px] font-black uppercase tracking-widest hover:bg-[#E5C366] hover:text-black transition-all duration-500 rounded-lg" data-t="f_submit">Envoyer la demande</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#0a0a0a] text-white py-20 px-6 border-t border-white/5">
+        <div class="max-w-[1500px] mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+                <div class="lg:col-span-2">
+                    <img src="https://r2-bucket.flowith.net/f/37fca580388d3d45/logo_myzina%25402000x732.png" class="h-10 mb-10 brightness-0 invert opacity-40" alt="">
+                    <p class="max-w-sm text-lg font-light opacity-30 leading-relaxed" data-t="footer_tagline">L'excellence de la pâte artisanale au service des plus grands pâtissiers et amateurs de goût.</p>
+                </div>
+                <div class="space-y-8">
+                    <h5 class="text-[11px] uppercase tracking-[0.2em] font-black text-[#E5C366]">Maison</h5>
+                    <div class="text-base font-light opacity-40 space-y-3">
+                        <p>Algerie - Alger</p>
+                        <p>Algérie</p>
+                    </div>
+                </div>
+                <div class="space-y-8">
+                    <h5 class="text-[11px] uppercase tracking-[0.2em] font-black text-[#E5C366]">Légal</h5>
+                    <div class="text-base font-light opacity-40 space-y-3">
+                        <p>© 2026 Myzina Gâteaux</p>
+                        <p>Tous droits réservés</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        const translations = {
+            fr: {
+                nav_heritage: "L'Héritage",
+                nav_catalogue: "Catalogue",
+                nav_process: "Savoir-faire",
+                nav_order: "Commander",
+                hero_subtitle: "Maison de Haute Pâtisserie",
+                hero_title: "L'Art de la Pâte Sublimée",
+                hero_desc: "Des bases d'exception façonnées à la main pour les créations les plus raffinées de la région.",
+                hero_cta: "Explorer",
+                heritage_tag: "Savoir-faire Ancestral",
+                heritage_title: "Un secret gardé entre le grain et l'eau.",
+                heritage_p1: "La Maison Myzina cultive l'excellence dans chaque geste. Nos fonds de tartes sont le fruit d'une alchimie parfaite entre technicité et passion.",
+                heritage_p2: "Nous sélectionnons les meilleures matières premières pour garantir une texture et un goût incomparables à chacune de vos bouchées.",
+                stat1_val: "Pureté",
+                stat1_label: "Sans additifs",
+                stat2_val: "24h",
+                stat2_label: "Repos de pâte",
+                cat_tag: "La Collection Signature",
+                cat_title: "Variantes",
+                unit_price: "Tarification",
+                unit_size: "Dimensions",
+                chef_note: "Conseil du Chef",
+                composition_title: "Composition",
+                quote_btn: "Commander cette variante",
+                q1_title: "Légèreté Inédite",
+                q1_desc: "Un équilibre parfait entre croquant et fondant, signature de notre maison.",
+                q2_title: "Qualité Premium",
+                q2_desc: "Utilisation exclusive de beurres extra-fins et de farines d'exception.",
+                q3_title: "Logistique Soignée",
+                q3_desc: "Un conditionnement protecteur garantissant la fraîcheur à l'arrivée.",
+                contact_tag: "Le Service Conciergerie",
+                contact_title: "Parlons de votre projet",
+                contact_subtitle: "Que vous soyez un professionnel ou un passionné, nous vous accompagnons dans la réalisation de vos rêves pâtissiers.",
+                f_name: "Nom & Prénom",
+                f_email: "Email",
+                f_subject: "Variante souhaitée",
+                f_message: "Votre Message",
+                f_submit: "Envoyer la demande",
+                success_title: "Merci",
+                success_desc: "Votre demande a été transmise. Un conseiller vous contactera sous 24 heures.",
+                footer_tagline: "L'excellence de la pâte artisanale au service des plus grands pâtissiers.",
+                footer_made: "Conçu avec excellence en Algérie"
+            },
+            ar: {
+                nav_heritage: "تراثنا",
+                nav_catalogue: "الكتالوج",
+                nav_process: "خبرتنا",
+                nav_order: "اطلب الآن",
+                hero_subtitle: "دار الحلويات الفاخرة",
+                hero_title: "فن العجين في أبهى صوره",
+                hero_desc: "قواعد استثنائية مشكلة يدوياً لأرقى الإبداعات في المنطقة.",
+                hero_cta: "اكتشف",
+                heritage_tag: "خبرة الأجداد",
+                heritage_title: "سر محفوظ بين الحبوب والماء.",
+                heritage_p1: "تعتني دار ميزينا بالتميز في كل حركة. قواعد الترت لدينا هي ثمرة توازن مثالي بين التقنية والشغف.",
+                heritage_p2: "نختار أفضل المواد الأولية لضمان قوام ومذاق لا يقارن في كل لقمة.",
+                stat1_val: "نقاء",
+                stat1_label: "بدون إضافات",
+                stat2_val: "24 ساعة",
+                stat2_label: "راحة العجين",
+                cat_tag: "المجموعة الحصرية",
+                cat_title: "الأنواع",
+                unit_price: "السعر",
+                unit_size: "الأبعاد",
+                chef_note: "نصيحة الشيف",
+                composition_title: "المكونات",
+                quote_btn: "اطلب هذا النوع",
+                q1_title: "خفة لا مثيل لها",
+                q1_desc: "توازن مثالي بين القرمشة والذوبان، بصمة دارنا الخاصة.",
+                q2_title: "جودة ممتازة",
+                q2_desc: "استخدام حصري للزبدة الرفيعة وأنواع الفرينة الفاخرة.",
+                q3_title: "خدمة لوجستية دقيقة",
+                q3_desc: "تغليف واقٍ يضمن الحفاظ على الطراوة عند الوصول.",
+                contact_tag: "خدمة العملاء",
+                contact_title: "لنتحدث عن مشروعك",
+                contact_subtitle: "سواء كنت محترفاً أو هاوياً، نحن نرافقك في تحقيق أحلامك في صناعة الحلويات.",
+                f_name: "الاسم واللقب",
+                f_email: "البريد الإلكتروني",
+                f_subject: "النوع المطلوب",
+                f_message: "رسالتك",
+                f_submit: "إرسال الطلب",
+                success_title: "شكراً لك",
+                success_desc: "تم استلام طلبك. سيتصل بك مستشارنا خلال 24 ساعة.",
+                footer_tagline: "تميز العجين الحرفي في خدمة كبار صانعي الحلويات.",
+                footer_made: "صنع بكل تميز في الجزائر"
+            }
+        };
+
+        const variants =[
+            {
+                id: "classique",
+                image: "https://raw.githubusercontent.com/yachenamk-hash/images/refs/heads/main/Firefly_GeminiFlash_la%20patte%20de%20fond%20de%20tarte%20au%20citron%20parfum%20de%20la%20patte%20sans%20fourrage%20558707.png",
+                hasOptions: true,
+                fr: {
+                    name: "L'Authentique ",
+                    price: "650 DZD / 12 pcs",
+                    size: "Ø 8cm - 10cm",
+                    desc: "Notre recette originelle, pur beurre, élaborée pour offrir un croustillant exceptionnel qui sublime vos ganaches et crèmes pâtissières.",
+                    note: "Disponible en version Sucrée pour vos desserts fruités ou Salée pour vos quiches et amuse-bouches raffinés.",
+                    ingredients:["Beurre extra-fin", "Farine de blé T45", "Sucre glace (version sucrée)", "Poudre d'amandes", "Œufs frais", "Sel de mer"],
+                    options: ["Classique Sucrée", "Classique Salée"]
+                },
+                ar: {
+                    name: "الأصيلة ",
+                    price: "650 دج / 12 قطعة",
+                    size: "قطر 8 سم - 10 سم",
+                    desc: "وصفاتنا الأصلية، بالزبدة الطبيعية، مُعدة لتقديم قرمشة استثنائية تبرز نكهة الكريمة والحشوات.",
+                    note: "متوفرة بنسخة حلوة للحلويات أو مالحة للمقبلات الراقية.",
+                    ingredients:["زبدة رفيعة", "فرينة صنف T45", "سكر ناعم (للحلوة)", "بودرة اللوز", "بيض طازج", "ملح بحر"],
+                    options: ["كلاسيكية حلوة", "كلاسيكية مالحة"]
+                }
+            },
+            {
+                id: "piment",
+                image: "https://raw.githubusercontent.com/yachenamk-hash/images/refs/heads/main/Firefly_Gemini%20Flash_remouve%20logo%20in%20this%20picture%20344274.png",
+                hasOptions: false,
+                fr: {
+                    name: "Éclat de Piment",
+                    price: "850 DZD / 12 pcs",
+                    size: "Ø 8cm",
+                    desc: "Une création audacieuse infusée au piment doux et piment d'Espelette. Une attaque subtile en bouche qui réveille les papilles sans les brûler.",
+                    note: "Idéal pour des tartes au chocolat noir intense ou des garnitures crémeuses à base d'avocat et crevettes.",
+                    ingredients:["Piment d'Espelette", "Piment doux séché", "Beurre de baratte", "Farine de force", "Fleur de sel"]
+                },
+                ar: {
+                    name: " الفلفل الحار",
+                    price: "850 دج / 12 قطعة",
+                    size: "قطر 8 سم",
+                    desc: "ابتكار جريء غني بالفلفل الحار . لدغة خفيفة توقظ الحواس دون حرقة قوية.",
+                    note: "مثالي لترت الشوكولاتة الداكنة أو حشوات الأفوكادو والجمبري.",
+                    ingredients:["الفلفل الحار", "زبدة طبيعية", "فرينة ", " ملح"]
+                }
+            },
+            {
+                id: "citron",
+                image: "https://raw.githubusercontent.com/yachenamk-hash/images/refs/heads/main/Firefly_Gemini%20Flash_remouve%20logo%20344274.png",
+                hasOptions: false,
+                fr: {
+                    name: "citron",
+                    price: "750 DZD / 12 pcs",
+                    size: "Ø 8cm",
+                    desc: "Une pâte infusée aux zestes de citrons frais. Une note acidulée et parfumée qui apporte une fraîcheur immédiate dès la première bouchée.",
+                    note: "Sublime les tartes au citron meringuées ou les garnitures à base de fromage frais et basilic.",
+                    ingredients:["Zestes de citron bio", "Beurre ", "Sucre ", "Extrait naturel de citron", "Farine "]
+                },
+                ar: {
+                    name: "نكهة الليمون ",
+                    price: "750 دج / 12 قطعة",
+                    size: "قطر 8 سم",
+                    desc: "عجينة غنية ببشر الليمون الطازج. نكهة حمضية وعطرية تضفي انتعاشاً فورياً منذ أول قضمة.",
+                    note: "تتناسب تماماً مع ترت الليمون بالميرنغ أو حشوات الجبن الطازج والريحان.",
+                    ingredients:[, "زبدة طبيعية", "سكر ", "مستخلص الليمون", "فرينة "]
+                }
+            },
+            {
+                id: "Chocolat Noir",
+                image: "https://raw.githubusercontent.com/yachenamk-hash/images/main/Firefly_Gemini%20Flash_remouve%20logo%20344274%20(1).png",
+                hasOptions: false,
+                fr: {
+                    name: "Noir Intense Cacao",
+                    price: "800 DZD / 12 pcs",
+                    size: "Ø 8cm",
+                    desc: "Pour les amateurs de saveurs corsées. Une pâte sombre et élégante intégrant un cacao 100% pur pour une profondeur de goût inégalée.",
+                    note: "Le compagnon parfait des ganaches au chocolat noir, caramel au beurre salé ou praliné noisette.",
+                    ingredients:["Cacao pur 100%", "Sucre ", "Beurre ", "Fleur de sel"]
+                },
+                ar: {
+                    name: "شوكولاتة داكنة",
+                    price: "800 دج / 12 قطعة",
+                    size: "قطر 8 سم",
+                    desc: "لعشاق النكهات القوية. عجينة داكنة وأنيقة تدمج الكاكاو الصافي 100% لعمق مذاق لا يضاهى.",
+                    note: "الشريك المثالي لجاناش الشوكولاتة الداكنة أو كراميل الزبدة المملحة.",
+                    ingredients:["كاكاو خام 100%", "سكر ", "زبدة ", " ملح"]
+                }
+            },
+            {
+                id: "curcuma",
+                image: "https://raw.githubusercontent.com/yachenamk-hash/images/refs/heads/main/Firefly_GeminiFlash_remouve%20logo%20344274.png",
+                hasOptions: false,
+                fr: {
+                    name: "Curcuma",
+                    price: "700 DZD / 12 pcs",
+                    size: "Ø 8cm - 10cm",
+                    desc: "Une innovation Myzina : une base salée ou sucrée-salée aux nuances dorées, apportant une complexité aromatique et visuelle unique.",
+                    note: "Parfait pour des tartes au chocolat-piment ou des créations audacieuses au miel et épices.",
+                    ingredients:["Curcuma ", "Beurre", "Farine", "Épices"]
+                },
+                ar: {
+                    name: "الكركم ",
+                    price: "700 دج / 12 قطعة",
+                    size: "قطر 8 سم - 10 سم",
+                    desc: "ابتكار ميزينا: قاعدة مالحة أو حلوة-مالحة بلمسات ذهبية، تضفي تعقيداً عطرياً وبصرياً فريداً.",
+                    note: "مثالية لترت الشوكولاتة بالفلفل أو إبداعات جريئة بالعسل والتوابل.",
+                    ingredients:["كركم أصلي", "زبدة ", "فرينة ", "توابل "]
+                }
+            }
+        ];
+
+        let currentLang = 'fr';
+        let currentVariantIndex = 0;
+
+        function init() {
+            lucide.createIcons();
+            setupLanguage();
+            setupNavigation();
+            setupCatalogue();
+            setupContactForm();
+            setupAnimations();
+            setupMobileMenu();
+            updateContactSelect();
+            
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        const navHeight = document.getElementById('main-nav').offsetHeight;
+                        window.scrollTo({
+                            top: target.offsetTop - navHeight,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        function setupMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const close = document.getElementById('close-menu');
+            const body = document.getElementById('body-main');
+            const navItems = document.querySelectorAll('.mobile-nav-item');
+
+            const toggleMenu = (show) => {
+                if (show) {
+                    menu.classList.remove('hidden');
+                    menu.classList.add('flex');
+                    body.classList.add('mobile-menu-active');
+                    gsap.fromTo(menu, 
+                        { opacity: 0, x: '100%' }, 
+                        { opacity: 1, x: 0, duration: 0.8, ease: 'expo.out' }
+                    );
+                } else {
+                    gsap.to(menu, { 
+                        opacity: 0, 
+                        x: '100%', 
+                        duration: 0.6, 
+                        ease: 'expo.in',
+                        onComplete: () => {
+                            menu.classList.add('hidden');
+                            menu.classList.remove('flex');
+                            body.classList.remove('mobile-menu-active');
+                        }
+                    });
+                }
+            };
+
+            btn.addEventListener('click', () => toggleMenu(true));
+            close.addEventListener('click', () => toggleMenu(false));
+            navItems.forEach(item => item.addEventListener('click', () => toggleMenu(false)));
+        }
+
+        function setupLanguage() {
+            const btn = document.getElementById('lang-toggle');
+            const label = document.getElementById('lang-label');
+            const body = document.getElementById('body-main');
+
+            const updateUI = () => {
+                document.querySelectorAll('[data-t]').forEach(el => {
+                    const key = el.getAttribute('data-t');
+                    if (translations[currentLang][key]) {
+                        el.textContent = translations[currentLang][key];
+                    }
+                });
+                
+                label.textContent = currentLang === 'fr' ? 'AR' : 'FR';
+                body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+                body.classList.toggle('rtl', currentLang === 'ar');
+                body.classList.toggle('font-arabic', currentLang === 'ar');
+                
+                setupCatalogue(); 
+                renderVariant(currentVariantIndex);
+                updateContactSelect();
+            };
+
+            btn.addEventListener('click', () => {
+                currentLang = currentLang === 'fr' ? 'ar' : 'fr';
+                updateUI();
+            });
+
+            updateUI();
+        }
+
+        function setupNavigation() {
+            const nav = document.getElementById('main-nav');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            }, { passive: true });
+        }
+
+        function setupCatalogue() {
+            const tabsContainer = document.getElementById('variation-tabs');
+            const imagesContainer = document.getElementById('variation-images');
+
+            tabsContainer.innerHTML = '';
+            imagesContainer.innerHTML = '';
+
+            variants.forEach((v, idx) => {
+                const tab = document.createElement('div');
+                tab.className = `nav-tab ${idx === currentVariantIndex ? 'active' : ''}`;
+                
+                const shortName = v[currentLang].name.split(' ')[0] || v.id;
+                tab.textContent = shortName.toUpperCase();
+                
+                tab.addEventListener('click', () => {
+                    if (currentVariantIndex === idx) return;
+                    switchVariant(idx);
+                });
+                tabsContainer.appendChild(tab);
+
+                const img = document.createElement('img');
+                img.src = v.image;
+                img.className = `variation-img ${idx === currentVariantIndex ? 'active' : ''}`;
+                img.loading = idx === 0 ? "eager" : "lazy";
+                imagesContainer.appendChild(img);
+            });
+        }
+
+        function switchVariant(idx) {
+            const tabs = document.querySelectorAll('.nav-tab');
+            const imgs = document.querySelectorAll('.variation-img');
+            const content = document.getElementById('variation-content');
+
+            tabs.forEach(t => t.classList.remove('active'));
+            if(tabs[idx]) {
+                tabs[idx].classList.add('active');
+                tabs[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+
+            imgs.forEach(i => i.classList.remove('active'));
+            if(imgs[idx]) imgs[idx].classList.add('active');
+
+            gsap.fromTo(content, 
+                { opacity: 0, y: 30, filter: 'blur(10px)' }, 
+                { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }
+            );
+            currentVariantIndex = idx;
+            renderVariant(idx);
+        }
+
+        function renderVariant(idx) {
+            const v = variants[idx];
+            if (!v) return;
+            const langData = v[currentLang];
+
+            document.getElementById('var-index').textContent = (idx + 1).toString().padStart(2, '0');
+            document.getElementById('var-title').textContent = langData.name;
+            document.getElementById('var-price').textContent = langData.price;
+            document.getElementById('var-size').textContent = langData.size;
+            document.getElementById('var-desc').textContent = langData.desc;
+            document.getElementById('var-note').textContent = langData.note;
+
+            const optionsContainer = document.getElementById('var-options-container');
+            optionsContainer.innerHTML = '';
+
+            if (v.hasOptions) {
+                langData.options.forEach(opt => {
+                    const span = document.createElement('span');
+                    span.className = 'px-5 py-2 bg-[#E5C366]/10 border border-[#E5C366]/20 text-[10px] uppercase tracking-wider text-[#E5C366] font-black rounded-full';
+                    span.textContent = opt;
+                    optionsContainer.appendChild(span);
+                });
+                optionsContainer.classList.remove('hidden');
+            } else {
+                optionsContainer.classList.add('hidden');
+            }
+        }
+
+        function updateContactSelect() {
+            const select = document.getElementById('contact-select');
+            if(!select) return;
+            
+            select.innerHTML = '';
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = "";
+            defaultOpt.disabled = true;
+            defaultOpt.selected = true;
+            defaultOpt.textContent = currentLang === 'fr' ? "Choisir une variante" : "اختر نوعاً";
+            select.appendChild(defaultOpt);
+
+            variants.forEach(v => {
+                if (v.hasOptions) {
+                    v[currentLang].options.forEach(opt => {
+                        const o = document.createElement('option');
+                        o.value = `${v.id}-${opt}`;
+                        o.textContent = `${v[currentLang].name} - ${opt}`;
+                        select.appendChild(o);
+                    });
+                } else {
+                    const opt = document.createElement('option');
+                    opt.value = v.id;
+                    opt.textContent = v[currentLang].name;
+                    select.appendChild(opt);
+                }
+            });
+        }
+
+        function setupContactForm() {
+            const form = document.getElementById('order-form');
+            const btn = document.getElementById('form-submit-btn');
+            if(!form) return;
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                btn.disabled = true;
+                const originalText = btn.textContent;
+                btn.textContent = currentLang === 'fr' ? 'ENVOI EN COURS...' : 'جاري الإرسال...';
+
+                const formData = new FormData(form);
+                const object = Object.fromEntries(formData.entries());
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        body: JSON.stringify(object)
+                    });
+
+                    if (response.ok) {
+                        alert(currentLang === 'fr' ? 'Message envoyé avec succès !' : 'تم الإرسال بنجاح !');
+                        form.reset();
+                    }
+                } catch (err) {
+                    alert('Une erreur est survenue.');
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                }
+            });
+        }
+
+        function setupAnimations() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.from('#hero-reveal > *', {
+                y: 40,
+                opacity: 0,
+                filter: 'blur(10px)',
+                duration: 1.5,
+                stagger: 0.15,
+                ease: 'expo.out',
+                delay: 0.2
+            });
+
+            document.querySelectorAll('.reveal-img').forEach(img => {
+                gsap.from(img, {
+                    scrollTrigger: { 
+                        trigger: img, 
+                        start: 'top 85%',
+                        toggleActions: 'play none none none'
+                    },
+                    scale: 1.2,
+                    opacity: 0,
+                    duration: 2,
+                    ease: 'power2.out'
+                });
+            });
+            
+
+            document.querySelectorAll('section').forEach(section => {
+                if (section.id === 'catalogue') return; 
+                gsap.from(section, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 80%',
+                    },
+                    opacity: 0,
+                    y: 20,
+                    duration: 1,
+                    ease: 'power2.out'
+                });
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"9166d45131dc47f3a1583bb5909a68ea","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
